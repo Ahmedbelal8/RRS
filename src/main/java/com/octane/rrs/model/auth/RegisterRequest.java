@@ -1,6 +1,7 @@
 package com.octane.rrs.model.auth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.octane.rrs.enums.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -24,4 +25,6 @@ public class RegisterRequest {
     @JsonProperty("password")
     @NotBlank(message = "password required")
     private String password;
+    @JsonProperty("role")
+    private Role role;
 }
