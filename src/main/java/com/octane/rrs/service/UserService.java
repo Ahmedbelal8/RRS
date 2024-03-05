@@ -23,7 +23,7 @@ public class UserService {
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
+                .role(request.getRole()==null?Role.USER:request.getRole())
                 .build();
         User savedUser = repository.save(user);
         logger.debug("createUser()>> USER created SUCCESSFULLY, savedUser id: {}",
