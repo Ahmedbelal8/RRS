@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.octane</groupId>
-	<artifactId>rrs</artifactId>
+	<artifactId>reading-recommendation-system</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>rrs</name>
 	<description>Reading Recommendation System</description>
