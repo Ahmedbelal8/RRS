@@ -15,7 +15,12 @@ public enum ErrorCode{
     USER_EXIST("OC-005","This email already registered",HttpStatus.BAD_REQUEST),
     BAD_CREDENTIALS("OC-006","Bad Credentials",HttpStatus.UNAUTHORIZED),
     NOT_FOUND_USER("OC-007","Not Found User",HttpStatus.NOT_FOUND),
-    NOT_FOUND_BOOK("OC-008","Not Found Book",HttpStatus.NOT_FOUND)
+    NOT_FOUND_BOOK("OC-008","Not Found Book",HttpStatus.NOT_FOUND),
+    UNAUTHORIZED_USER_ID("OC-009","Wrong User ID", HttpStatus.UNAUTHORIZED),
+    BAD_REQUEST_START_PAGE_BIGGER_THAN_END_PAGE("OC-010","Start Page Bigger Than End Page",
+            HttpStatus.BAD_REQUEST),
+    BAD_REQUEST_END_PAGE_BIGGER_THAN_BOOK_PAGES("OC-011","End Page Bigger than Book Pages",
+            HttpStatus.BAD_REQUEST),
     ;
     private String code;
     private String errorCodeDescription;

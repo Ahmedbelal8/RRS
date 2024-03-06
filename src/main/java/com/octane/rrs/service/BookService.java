@@ -2,9 +2,9 @@ package com.octane.rrs.service;
 
 import com.octane.rrs.exception.CustomException;
 import com.octane.rrs.exception.ErrorCode;
+import com.octane.rrs.model.UserReadingInterval;
 import com.octane.rrs.model.book.AddBookRequest;
 import com.octane.rrs.model.book.Book;
-import com.octane.rrs.model.UserReadingInterval;
 import com.octane.rrs.repository.BookRepository;
 import com.octane.rrs.security.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -49,33 +49,38 @@ public class BookService {
         return book;
     }
 
-    public void validateUserReadingInterval(UserReadingInterval newUserReadingInterval,
-                                            int bookId) {
-        logger.info("validateUserReadingInterval()>> newUserReadingInterval: {}, bookId: {}",
-                newUserReadingInterval, bookId);
-        Book book = getBookById(bookId);
-        if (newUserReadingInterval.getStartPage() > newUserReadingInterval.getEndPage()
-                || newUserReadingInterval.getEndPage() > book.getNumOfPages()) {
-            throw new CustomException(ErrorCode.INVALID_INPUT);
+    public void validateUserReadingInterval(UserReadingInterval newUserReadingInterval) {
+        logger.info("validateUserReadingInterval()>> newUserReadingInterval: {}",
+                newUserReadingInterval);
+        if (newUserReadingInterval.getUserId() != JwtService.getSubject()) {
+            throw new CustomException(ErrorCode.UNAUTHORIZED_USER_ID);
+        }
+        Book book = getBookById(newUserReadingInterval.getBookId());
+        if (newUserReadingInterval.getStartPage() > newUserReadingInterval.getEndPage()) {
+            throw new CustomException(ErrorCode.BAD_REQUEST_START_PAGE_BIGGER_THAN_END_PAGE);
+        }
+        if (newUserReadingInterval.getEndPage() > book.getNumOfPages()) {
+            throw new CustomException(ErrorCode.BAD_REQUEST_END_PAGE_BIGGER_THAN_BOOK_PAGES);
         }
         newUserReadingInterval.setUserId(JwtService.getSubject());
         newUserReadingInterval.setBookId(book.getBookId());
         logger.debug("validateUserReadingInterval()>> newUserReadingInterval: {}", newUserReadingInterval);
     }
 
-    public boolean submitInterval(UserReadingInterval newUserReadingInterval, int bookId) {
+    public boolean submitInterval(UserReadingInterval newUserReadingInterval) {
+        int bookId = newUserReadingInterval.getBookId();
         Book book = getBookById(bookId);
-        int userId=JwtService.getSubject();
+        int userId = JwtService.getSubject();
         int newNumOfReadingPages;
 //  FIRST APPROACH
 //        /** Delete Comment
-         newNumOfReadingPages = userReadingIntervalService.updateIntervals
-         (newUserReadingInterval, bookId,userId);
+        newNumOfReadingPages = userReadingIntervalService.updateIntervals
+                (newUserReadingInterval, bookId, userId);
 //         **/
 
 //  SECOND APPROACH
-        newNumOfReadingPages = userReadingIntervalService._updateIntervals(newUserReadingInterval
-                , bookId,userId);
+//        newNumOfReadingPages = userReadingIntervalService._updateIntervals(newUserReadingInterval
+//                , bookId,userId);
 
         logger.debug("submitInterval()>> newNumOfReadingPages: {}", newNumOfReadingPages);
         book.setNumOfReadPages(book.getNumOfReadPages() + newNumOfReadingPages);

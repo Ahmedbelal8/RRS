@@ -84,8 +84,8 @@ public class BookServiceTest {
 
         // Mock existing intervals
         List<UserReadingInterval> existingIntervals = new LinkedList<>(Arrays.asList(
-                UserReadingInterval.builder().id(1).bookId(bookId).userId(userId).startPage(1).endPage(5).build(),
-                UserReadingInterval.builder().id(2).bookId(bookId).userId(userId).startPage(8).endPage(12).build()
+                UserReadingInterval.builder().userIntervalId(1).bookId(bookId).userId(userId).startPage(1).endPage(5).build(),
+                UserReadingInterval.builder().userIntervalId(2).bookId(bookId).userId(userId).startPage(8).endPage(12).build()
         ));
         when(repository.findAllByUserIdAndBookIdOrderByStartPage(userId, bookId)).thenReturn(existingIntervals);
         int result = userReadingIntervalService.updateIntervals(newUserReadingInterval, bookId, userId);
