@@ -2,17 +2,16 @@ package com.octane.rrs.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 
 @Data
 public class UserReadingIntervalDto {
 
     @JsonProperty("book_id")
-    @PositiveOrZero
+    @Positive
     private int bookId;
     @JsonProperty("user_id")
-    @PositiveOrZero
+    @Positive
     private int userId;
     @JsonProperty("start_page")
     @Positive
