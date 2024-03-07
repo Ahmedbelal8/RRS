@@ -24,17 +24,14 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public User register(RegisterRequest request) {
 
         if (userService.checkIfUserExist(request.getEmail())) {
             logger.debug("register()>> this email : {} already registered", request.getEmail());
             throw new CustomException(ErrorCode.USER_EXIST);
         }
         User user = userService.createUser(request);
-        String jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder()
-                .accessToken(jwtToken)
-                .build();
+        return user;
     }
 
 
