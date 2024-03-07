@@ -1,5 +1,6 @@
 package com.octane.rrs.controller;
 
+import com.octane.rrs.model.User;
 import com.octane.rrs.model.auth.AuthenticationRequest;
 import com.octane.rrs.model.auth.AuthenticationResponse;
 import com.octane.rrs.model.auth.RegisterRequest;
@@ -22,7 +23,7 @@ public class AuthenticationController {
     private final AuthenticationService service;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
+    public ResponseEntity<User> register(
             @Valid @RequestBody RegisterRequest request
     ) {
         logger.info("register()>> email: {}",request.getEmail());
