@@ -106,7 +106,8 @@ public class UserReadingIntervalService {
         int end = userReadingIntervals.get(0).getEndPage();
         for (int i = 1; i < numOfIntervals + 1; i++) {
             if (userReadingIntervals.get(i).getStartPage() > end + 1) {
-                newUserReadingIntervals.add(new UserReadingInterval(null, bookId, 1, start, end));
+                newUserReadingIntervals.add(new UserReadingInterval(null, bookId, userId, start,
+                        end));
                 newRead += end - start + 1;
                 start = userReadingIntervals.get(i).getStartPage();
                 end = userReadingIntervals.get(i).getEndPage();
